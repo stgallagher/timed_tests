@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  top_factor: 1
+  bottom_factor: 1
+  operator: MyString
+  answer: 1
+
+two:
+  top_factor: 1
+  bottom_factor: 1
+  operator: MyString
+  answer: 1
