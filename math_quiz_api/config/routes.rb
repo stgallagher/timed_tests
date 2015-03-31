@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :user_logins
+
   resources :quiz_sessions
 
   resources :schools

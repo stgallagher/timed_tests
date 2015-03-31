@@ -22,7 +22,12 @@ namespace :db do
       first_name = Forgery('name').first_name
       last_name = Forgery('name').last_name
       gender = gd.get_gender(first_name)
-      teachers << Teacher.create( :first_name => first_name, :last_name => last_name, :gender => gender, :grade => 'third')
+      teacher = Teacher.create( :first_name => first_name, :last_name => last_name, :gender => gender, :grade => 'third')
+      teachers << teacher
+      username = create_username(teacher[:first_name], teacher[:last_name])
+      password = Forgery('basic').password
+      teacher_login = UserLogin.create( :username => username, :password => password, :role => 'teacher')
+      teacher.user_login = teacher_login
     end
 
     # create classrooms
@@ -45,6 +50,11 @@ namespace :db do
         last_name = Forgery('name').last_name
         gender = gd.get_gender(first_name)
         student = Student.create( :first_name => first_name, :last_name => last_name, :gender => gender, :grade => 'third')
+        # assign students logins
+        username = create_username(student[:first_name], student[:last_name])
+        password = Forgery('basic').password
+        student_login = UserLogin.create( :username => username, :password => password, :role => 'student')
+        student.user_login = student_login
         # create array of student models
         classroom_students << student
         # associate students with classrooms
@@ -138,6 +148,10 @@ namespace :db do
     else
       return false
     end
+  end
+
+  def create_username(first, last)
+    first[0].downcase + last.downcase
   end
 
 end
